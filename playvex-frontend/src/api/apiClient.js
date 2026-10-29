@@ -7,12 +7,9 @@ import { isTokenExpired } from "../utils/helpers";
  * For production, consider HttpOnly cookies managed server-side.
  */
 
-// In development mode, always use relative path "" so that requests go through
-// the Vite proxy. This ensures all browser requests are same-origin (http://localhost:5173),
-// avoiding browser CORS preflight (OPTIONS) requests that Spring Security blocks with 403.
-const API_BASE_URL = import.meta.env.DEV
-  ? ""
-  : (import.meta.env.VITE_API_BASE_URL || "");
+// If VITE_API_BASE_URL is set (e.g. "http://localhost:8080" or deployed URL), use it directly.
+// If left empty, use relative path "" so requests route through Vite's local dev proxy (/api).
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/+$/, "");
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
