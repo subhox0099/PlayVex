@@ -1,0 +1,12 @@
+.home-page-youtube {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: calc(100vh - 56px);
+  padding: 0 4px 40px;
+}
+
+.home-feed {
+  width: 100%;
+  margin-top: 12px;
+}

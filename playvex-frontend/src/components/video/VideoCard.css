@@ -1,0 +1,295 @@
+.video-card {
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  border-radius: var(--radius-card);
+  overflow: visible;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  transition: transform var(--transition-fast);
+}
+
+.video-card:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-primary);
+  border-radius: var(--radius-card);
+}
+
+/* ── 16:9 Thumbnail / Video Preview Container ── */
+.video-card__thumbnail-container {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #121218;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  transition: transform var(--transition-normal), border-radius var(--transition-fast),
+    box-shadow var(--transition-normal);
+}
+
+.video-card:hover .video-card__thumbnail-container {
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 12px rgba(255, 59, 92, 0.2);
+}
+
+.video-card--previewing .video-card__thumbnail-container {
+  border-radius: 6px;
+  transform: scale(1.04);
+  z-index: 2;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.85), 0 0 20px rgba(255, 59, 92, 0.25);
+}
+
+/* Video element (thumbnail frame & hover playback) */
+.video-card__video-element {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background-color: #0b0b0f;
+  pointer-events: none;
+}
+
+/* Fallback poster */
+.video-card__poster-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.video-card__poster-play {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 59, 92, 0.85);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 3px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  opacity: 0.8;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.video-card:hover .video-card__poster-play {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+/* Hover preview indicator */
+.video-card__preview-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(11, 11, 15, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f5f5f7;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 3;
+}
+
+/* Progress track along bottom edge */
+.video-card__progress-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: 4;
+}
+
+.video-card__progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  transition: width 0.1s linear;
+}
+
+/* Badges */
+.video-card__badges {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 3;
+}
+
+.video-card__badge-duration {
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 5px;
+  border-radius: 4px;
+  letter-spacing: 0.2px;
+}
+
+/* ── YouTube-Style Meta Details ── */
+.video-card__details {
+  display: flex;
+  gap: 12px;
+  padding: 12px 2px 8px;
+  align-items: flex-start;
+  position: relative;
+}
+
+/* Channel Avatar */
+.video-card__channel-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: transform var(--transition-fast);
+  user-select: none;
+}
+
+.video-card:hover .video-card__channel-avatar {
+  transform: scale(1.05);
+}
+
+/* Meta Content */
+.video-card__meta-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.video-card__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.35;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+.video-card__channel-name {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--transition-fast);
+}
+
+.video-card__channel-name:hover {
+  color: var(--color-text);
+}
+
+.video-card__stats-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12.5px;
+  color: var(--color-text-secondary);
+}
+
+.video-card__dot {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+/* 3-Dots Menu */
+.video-card__menu-wrapper {
+  position: relative;
+}
+
+.video-card__menu-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-fast), background var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.video-card:hover .video-card__menu-btn,
+.video-card:focus-within .video-card__menu-btn {
+  opacity: 1;
+}
+
+.video-card__menu-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text);
+}
+
+/* Dropdown Menu */
+.video-card__dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+  background: #17171f;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7);
+  padding: 6px;
+  min-width: 170px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.video-card__dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.video-card__dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.video-card__dropdown-item--danger {
+  color: #ef4444;
+}
+
+.video-card__dropdown-item--danger:hover {
+  background: rgba(239, 68, 68, 0.12);
+}

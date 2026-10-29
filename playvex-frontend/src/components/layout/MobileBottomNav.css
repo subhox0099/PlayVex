@@ -1,0 +1,89 @@
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  z-index: var(--z-topbar);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.mobile-bottom-nav__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: var(--bottom-nav-height);
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 var(--space-2);
+}
+
+.mobile-bottom-nav__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  flex: 1;
+  height: 100%;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: var(--font-medium);
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.mobile-bottom-nav__item:hover {
+  color: var(--color-text);
+}
+
+.mobile-bottom-nav__item--active {
+  color: var(--color-primary);
+}
+
+.mobile-bottom-nav__icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast);
+}
+
+.mobile-bottom-nav__item--active .mobile-bottom-nav__icon-wrapper {
+  transform: translateY(-2px);
+}
+
+.mobile-bottom-nav__item--primary {
+  color: var(--color-primary);
+}
+
+.mobile-bottom-nav__item--primary .mobile-bottom-nav__icon-wrapper {
+  background: var(--color-primary);
+  color: #ffffff;
+  border-radius: var(--radius-full);
+  padding: 6px;
+  margin-top: -12px;
+  box-shadow: 0 4px 14px rgba(255, 59, 92, 0.4);
+  transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+.mobile-bottom-nav__item--primary:hover .mobile-bottom-nav__icon-wrapper {
+  background: var(--color-primary-hover);
+  transform: scale(1.05) translateY(-2px);
+}
+
+.mobile-bottom-nav__label {
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .mobile-bottom-nav {
+    display: block;
+  }
+}
+

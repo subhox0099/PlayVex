@@ -1,0 +1,45 @@
+.video-card-skeleton {
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  overflow: visible;
+}
+
+.video-card-skeleton__thumbnail {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  border-radius: 12px;
+}
+
+.video-card-skeleton__details {
+  display: flex;
+  gap: 12px;
+  padding: 12px 2px 8px;
+}
+
+.video-card-skeleton__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.video-card-skeleton__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.video-card-skeleton__title {
+  height: 16px;
+  width: 85%;
+  border-radius: var(--radius-sm);
+}
+
+.video-card-skeleton__meta {
+  height: 12px;
+  width: 50%;
+  border-radius: var(--radius-sm);
+}
+
