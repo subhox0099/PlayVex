@@ -61,14 +61,25 @@ public class SecurityConfig {
                                 "/error"
                         ).permitAll()
 
-                        .requestMatchers(
-                                "/api/videos",
-                                "/api/videos/**",
-                                "/api/users",
-                                "/api/users/**",
-                                "/api/comments",
-                                "/api/comments/**"
-                        ).authenticated()
+                        // Public video browsing & streaming
+                        .requestMatchers(HttpMethod.GET, "/api/videos/allvideos").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/videos/search").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/videos/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/videos/{id}/play").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/videos/{id}/view").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/comments/video/**").permitAll()
+
+                        // Authenticated video actions
+                        .requestMatchers(HttpMethod.POST, "/api/videos/upload").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/videos/my-videos").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/videos/{id}/like").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/api/videos/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/videos/**").authenticated()
+
+                        // Authenticated user and comment actions
+                        .requestMatchers("/api/users/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/comments/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/comments/**").authenticated()
 
                         .anyRequest().authenticated()
                 )
