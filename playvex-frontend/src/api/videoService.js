@@ -28,7 +28,8 @@ export const getVideoBlob = (id) =>
   apiClient.get(`/api/videos/${id}/play`, { responseType: "blob" });
 
 export const getVideoUrl = (id) => {
-  const base = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/+$/, "");
+  const rawBase = (import.meta.env.VITE_API_BASE_URL || "").trim();
+  const base = rawBase.replace(/\/api\/?$/i, "").replace(/\/+$/, "");
   return `${base}/api/videos/${id}/play`;
 };
 

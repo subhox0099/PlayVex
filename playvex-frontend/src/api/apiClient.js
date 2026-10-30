@@ -7,9 +7,11 @@ import { isTokenExpired } from "../utils/helpers";
  * For production, consider HttpOnly cookies managed server-side.
  */
 
-// If VITE_API_BASE_URL is set (e.g. "http://localhost:8080" or deployed URL), use it directly.
+// If VITE_API_BASE_URL is set (e.g. "https://playvex-backend.onrender.com"), use it directly.
+// Strip any trailing "/api" or slashes so endpoints like "/api/auth/login" don't become "/api/api/...".
 // If left empty, use relative path "" so requests route through Vite's local dev proxy (/api).
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/+$/, "");
+const rawBase = (import.meta.env.VITE_API_BASE_URL || "").trim();
+const API_BASE_URL = rawBase.replace(/\/api\/?$/i, "").replace(/\/+$/, "");
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
