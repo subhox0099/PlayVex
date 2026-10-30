@@ -110,13 +110,22 @@ public class VideoController {
     // ─── POST /api/videos/upload ──────────────────────────────────────────────
 
     @PostMapping(value = "/upload", consumes = "multipart/form-data")
-    public ResponseEntity<?> PostVideo(@RequestParam("file") MultipartFile file,
-                                       @RequestParam("title") String title,
-                                       @RequestParam(value = "description", required = false) String Description,
-                                       @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<videoResponse> PostVideo(@RequestParam("file") MultipartFile file,
+                                                   @RequestParam("title") String title,
+                                                   @RequestParam(value = "description", required = false) String Description,
+                                                   @AuthenticationPrincipal UserDetails userDetails) {
 
         video savedvideo = videoService.SaveVideo(file, title, Description, userDetails.getUsername());
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedvideo);
+        videoResponse response = new videoResponse(
+                savedvideo.getId(),
+                savedvideo.getTitle(),
+                savedvideo.getDescription(),
+                savedvideo.getFileName(),
+                savedvideo.getContentType(),
+                savedvideo.getFilesize(),
+                savedvideo.getViews()
+        );
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     // ─── POST /api/videos/{id}/view ───────────────────────────────────────────

@@ -1,5 +1,6 @@
 package video.player.videoplayer.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -11,19 +12,26 @@ public class user {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true, nullable = false,  length = 50)
+
+    @Column(unique = true, nullable = false, length = 50)
     private String username;
+
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false,  unique = true, length = 150)
+
+    @Column(nullable = false, unique = true, length = 150)
     private String email;
+
     private String role = "user";
     private String profilePicture;
-    @OneToMany(mappedBy = "user",  fetch = FetchType.LAZY)
-    private List<video> videos = new ArrayList<>();
-public user(){
 
-}
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<video> videos = new ArrayList<>();
+
+    public user() {
+    }
 
     public Long getId() {
         return id;
@@ -57,14 +65,6 @@ public user(){
         this.email = email;
     }
 
-    public List<video> getVideos() {
-        return videos;
-    }
-
-    public void setVideos(List<video> videos) {
-        this.videos = videos;
-    }
-
     public String getRole() {
         return role;
     }
@@ -79,5 +79,13 @@ public user(){
 
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public List<video> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<video> videos) {
+        this.videos = videos;
     }
 }

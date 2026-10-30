@@ -1,5 +1,6 @@
 package video.player.videoplayer.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,9 +23,11 @@ public class video {
     private String title;
     @Column(length = 1000)
     private String description;
-    @Lob
-    @Column(name = "Video_data", columnDefinition = "BYTEA")
+
+    @JsonIgnore
+    @Column(name = "Video_data")
     private byte[] videoData;
+
     private String filePath;
     private String fileName;
     private String contentType;
@@ -35,24 +38,29 @@ public class video {
     private Long views = 0L;
     @Builder.Default
     private Long likes = 0L;
+
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id",
-    nullable = false,
-    foreignKey = @ForeignKey(name = "fk_video_user"))
+            nullable = false,
+            foreignKey = @ForeignKey(name = "fk_video_user"))
     private user user;
-    @OneToMany(mappedBy = "video", fetch = FetchType.LAZY )
-    private List<Comments>comments = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "video", fetch = FetchType.LAZY)
+    private List<Comments> comments = new ArrayList<>();
 
 
-    public video(String title, String description, String filePath, String fileName, String contentType, Long filesize )
-    { this.title = title;
+    public video(String title, String description, String filePath, String fileName, String contentType, Long filesize) {
+        this.title = title;
         this.description = description;
         this.filePath = filePath;
         this.fileName = fileName;
         this.contentType = contentType;
         this.filesize = filesize;
         this.uploadedAt = LocalDateTime.now();
-        this.views = 0L; }
+        this.views = 0L;
+    }
 
     public user getUser() {
         return user;
@@ -61,6 +69,7 @@ public class video {
     public void setUser(user user) {
         this.user = user;
     }
+
     public Long getId() {
         return id;
     }
@@ -92,6 +101,7 @@ public class video {
     public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
+
     public byte[] getVideoData() {
         return videoData;
     }
@@ -99,6 +109,7 @@ public class video {
     public void setVideoData(byte[] videoData) {
         this.videoData = videoData;
     }
+
     public String getFileName() {
         return fileName;
     }
@@ -137,5 +148,21 @@ public class video {
 
     public void setViews(Long views) {
         this.views = views;
+    }
+
+    public Long getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Long likes) {
+        this.likes = likes;
+    }
+
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
     }
 }
