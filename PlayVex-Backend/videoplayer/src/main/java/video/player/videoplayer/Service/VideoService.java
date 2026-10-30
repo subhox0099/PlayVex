@@ -95,7 +95,8 @@ public class    VideoService {
 
             return VideoRepository.save(video);
 
-        } catch (IOException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR,
                     "FAILED TO SAVE VIDEO");
